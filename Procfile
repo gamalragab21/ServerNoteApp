@@ -1,0 +1,1 @@
+web: build/install/RESTAPI-CRUD/bind/RESTAPI-CRUD

@@ -2,6 +2,7 @@ package com.example.repositories
 
 import com.example.data.model.Note
 import com.example.data.table.NoteEntity
+import com.example.data.table.UserEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.ktorm.database.Database
@@ -36,6 +37,18 @@ class NoteRepository(private val db: Database) {
             }
         }
         result
+    }
+
+    suspend fun findNoteById(noteId: Int, userId: Int)=withContext(Dispatchers.IO){
+        val note = db.from(NoteEntity)
+            .select()
+            .where {
+                (NoteEntity.id eq noteId) and (NoteEntity.userId eq userId)
+            }.map {
+                rowToNote(it)
+            }.firstOrNull()
+
+        note
     }
 
     suspend fun deleteNote(noteId: Int, userId: Int) = withContext(Dispatchers.IO) {

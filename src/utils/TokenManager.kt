@@ -19,11 +19,14 @@ class TokenManager(val config: HoconApplicationConfig) {
             .withAudience(audience)
             .withIssuer(issuer)
 //            .withClaim("email", user.email)
-            .withClaim("userId", user.id)
+            .withClaim("email", user.email)
            // .withExpiresAt(Date(expirationDate))
             .sign(Algorithm.HMAC256(secret))
         return token
     }
+
+
+
 
     fun verifyJWTToken(): JWTVerifier {
         return JWT.require(Algorithm.HMAC256(secret))
