@@ -1,1 +1,1 @@
-web: build/install/RESTAPI-CRUD/bind/RESTAPI-CRUD
+web: build/install/example/bind/example
