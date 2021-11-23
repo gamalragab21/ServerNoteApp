@@ -31,6 +31,9 @@ repositories {
     maven { url 'https://kotlin.bintray.com/ktor' }
     mavenCentral()
 }
+tasks.create("stage"){
+    dependsOn("installDist")
+}
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
