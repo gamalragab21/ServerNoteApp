@@ -59,7 +59,7 @@ fun Route.noteRoute(noteRepository: NoteRepository, tokenManager: TokenManager) 
                     HttpStatusCode.Conflict,
                     MyResponse(
                         success = false,
-                        message = e.message ?: "Conflict during insert note",
+                        message = e.message ?: "Conflict during get note",
                         data = null
                     )
                 )
@@ -68,7 +68,7 @@ fun Route.noteRoute(noteRepository: NoteRepository, tokenManager: TokenManager) 
         }
         // base_url/v1/notes/create
         post(CREATE_NOTES) {
-            val note = try {
+            val note:Note = try {
                 call.receive<Note>()
             } catch (e: Exception) {
                 call.respond(

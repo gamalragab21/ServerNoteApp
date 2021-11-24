@@ -9,7 +9,7 @@ data class User(
     val id:Int?=-1,
     val username:String,
     val email:String,
-    val image:String?=null,
+    val image:String?,
     val password:String
 ): Principal {
     fun hashedPassword(): String {

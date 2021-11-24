@@ -10,7 +10,7 @@ data class Note(
     val dataTime: String,
     val imagePath: String?=null,
     val note: String,
-    val color: String?,
+    val color: String="#FFFF",
     val webLink: String?=null,
     val userId: Int?
 )
