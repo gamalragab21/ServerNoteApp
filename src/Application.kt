@@ -22,7 +22,7 @@ import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 
 fun main(args: Array<String>) {
-    embeddedServer(Netty, port = 8080, host = "0.0.0.0") {
+    embeddedServer(Netty, port = 4567, host = "0.0.0.0") {
         val config = HoconApplicationConfig(ConfigFactory.load())
         val db = ConnectionDataBase.database
         val userRepository = UserRepository(db)

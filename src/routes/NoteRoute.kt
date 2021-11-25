@@ -56,7 +56,7 @@ fun Route.noteRoute(noteRepository: NoteRepository, tokenManager: TokenManager) 
 
             } catch (e: Exception) {
                 call.respond(
-                    HttpStatusCode.Conflict,
+                    HttpStatusCode.OK,
                     MyResponse(
                         success = false,
                         message = e.message ?: "Conflict during get note",
@@ -72,7 +72,7 @@ fun Route.noteRoute(noteRepository: NoteRepository, tokenManager: TokenManager) 
                 call.receive<Note>()
             } catch (e: Exception) {
                 call.respond(
-                    HttpStatusCode.BadRequest, MyResponse(
+                    HttpStatusCode.OK, MyResponse(
                         false,
                         "Missing Fields", data = null
                     )
@@ -98,7 +98,7 @@ fun Route.noteRoute(noteRepository: NoteRepository, tokenManager: TokenManager) 
                     return@post
                 } else {
                     call.respond(
-                        HttpStatusCode.Conflict,
+                        HttpStatusCode.OK,
                         MyResponse(
                             success = false,
                             message = "Failed insert note.",
@@ -110,7 +110,7 @@ fun Route.noteRoute(noteRepository: NoteRepository, tokenManager: TokenManager) 
 
             } catch (e: Exception) {
                 call.respond(
-                    HttpStatusCode.Conflict,
+                    HttpStatusCode.OK,
                     MyResponse(
                         success = false,
                         message = e.message ?: "Conflict during insert note",
@@ -128,7 +128,7 @@ fun Route.noteRoute(noteRepository: NoteRepository, tokenManager: TokenManager) 
                 call.receive<Note>()
             } catch (e: Exception) {
                 call.respond(
-                    HttpStatusCode.BadRequest, MyResponse(
+                    HttpStatusCode.OK, MyResponse(
                         false,
                         "Missing Fields", data = null
                     )
@@ -155,7 +155,7 @@ fun Route.noteRoute(noteRepository: NoteRepository, tokenManager: TokenManager) 
                         return@put
                     } else {
                         call.respond(
-                            HttpStatusCode.Conflict,
+                            HttpStatusCode.OK,
                             MyResponse(
                                 success = false,
                                 message = "Failed update note.",
@@ -166,7 +166,7 @@ fun Route.noteRoute(noteRepository: NoteRepository, tokenManager: TokenManager) 
                     }
                 } else {
                     call.respond(
-                        HttpStatusCode.BadRequest,
+                        HttpStatusCode.OK,
                         MyResponse(
                             success = false,
                             message = "Missing Id of note",
@@ -177,7 +177,7 @@ fun Route.noteRoute(noteRepository: NoteRepository, tokenManager: TokenManager) 
                 }
             } catch (e: Exception) {
                 call.respond(
-                    HttpStatusCode.Conflict,
+                    HttpStatusCode.OK,
                     MyResponse(
                         success = false,
                         message = e.message ?: "Conflict during update note",
@@ -196,7 +196,7 @@ fun Route.noteRoute(noteRepository: NoteRepository, tokenManager: TokenManager) 
                 call.request.queryParameters["id"]!!.toInt()
             } catch (e: Exception) {
                 call.respond(
-                    HttpStatusCode.BadRequest, MyResponse(
+                    HttpStatusCode.OK, MyResponse(
                         false,
                         "Missing  Id Field", data = null
                     )
@@ -222,7 +222,7 @@ fun Route.noteRoute(noteRepository: NoteRepository, tokenManager: TokenManager) 
                     return@delete
                 } else {
                     call.respond(
-                        HttpStatusCode.Conflict,
+                        HttpStatusCode.OK,
                         MyResponse(
                             success = false,
                             message = "Failed delete  note.",
@@ -234,7 +234,7 @@ fun Route.noteRoute(noteRepository: NoteRepository, tokenManager: TokenManager) 
 
             } catch (e: Exception) {
                 call.respond(
-                    HttpStatusCode.Conflict,
+                    HttpStatusCode.OK,
                     MyResponse(
                         success = false,
                         message = e.message ?: "Conflict during delete note",
@@ -251,7 +251,7 @@ fun Route.noteRoute(noteRepository: NoteRepository, tokenManager: TokenManager) 
                 call.parameters["id"]?.toInt() ?: -1
             } catch (e: Exception) {
                 call.respond(
-                    HttpStatusCode.BadRequest, MyResponse(
+                    HttpStatusCode.OK, MyResponse(
                         false,
                         "Missing  Id Field", data = null
                     )
@@ -283,7 +283,7 @@ fun Route.noteRoute(noteRepository: NoteRepository, tokenManager: TokenManager) 
 
             } catch (e: Exception) {
                 call.respond(
-                    HttpStatusCode.Conflict, MyResponse(
+                    HttpStatusCode.OK, MyResponse(
                         false,
                         "Conflict during get note", data = null
                     )

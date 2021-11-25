@@ -7,6 +7,7 @@ import com.example.repositories.UserRepository
 import com.example.utils.MyResponse
 import com.example.utils.TokenManager
 import io.ktor.application.*
+import io.ktor.auth.*
 import io.ktor.http.*
 import io.ktor.locations.*
 import io.ktor.request.*
@@ -17,6 +18,7 @@ const val API_VERSION = "/v1"
 const val USERS = "$API_VERSION/users"
 const val REGISTER_REQUEST = "$USERS/register"
 const val LOGIN_REQUEST = "$USERS/login"
+const val ME_REQUEST = "$USERS/me"
 
 //@Location(REGISTER_REQUEST)
 //class UserRegisterRoute
@@ -33,7 +35,7 @@ fun Route.usersRoute(userRepository: UserRepository, tokenManager: TokenManager)
             call.receive<RegisterRequest>()
         } catch (e: Exception) {
             call.respond(
-                HttpStatusCode.BadRequest,
+                HttpStatusCode.OK,
                 MyResponse(
                     success = false,
                     message = "Missing Some Fields",
@@ -66,7 +68,7 @@ fun Route.usersRoute(userRepository: UserRepository, tokenManager: TokenManager)
                     return@post
                 } else {
                     call.respond(
-                        HttpStatusCode.Conflict,
+                        HttpStatusCode.OK,
                         MyResponse(
                             success = false,
                             message = "Failed Registration",
@@ -77,7 +79,7 @@ fun Route.usersRoute(userRepository: UserRepository, tokenManager: TokenManager)
                 }
             } else {
                 call.respond(
-                    HttpStatusCode.BadRequest,
+                    HttpStatusCode.OK,
                     MyResponse(
                         success = false,
                         message = "User already registration before.",
@@ -89,7 +91,7 @@ fun Route.usersRoute(userRepository: UserRepository, tokenManager: TokenManager)
 
         } catch (e: Exception) {
             call.respond(
-                HttpStatusCode.Conflict,
+                HttpStatusCode.OK,
                 MyResponse(
                     success = false,
                     message = e.message ?: "Failed Registration",
@@ -108,7 +110,7 @@ fun Route.usersRoute(userRepository: UserRepository, tokenManager: TokenManager)
             call.receive<LoginRequest>()
         } catch (e: Exception) {
             call.respond(
-                HttpStatusCode.BadRequest,
+                HttpStatusCode.OK,
                 MyResponse(
                     success = false,
                     message = "Missing Some Fields",
@@ -138,7 +140,7 @@ fun Route.usersRoute(userRepository: UserRepository, tokenManager: TokenManager)
                     return@post
                 } else {
                     call.respond(
-                        HttpStatusCode.BadRequest,
+                        HttpStatusCode.OK,
                         MyResponse(
                             success = false,
                             message = "Password Incorrect",
@@ -149,7 +151,7 @@ fun Route.usersRoute(userRepository: UserRepository, tokenManager: TokenManager)
                 }
             } else {
                 call.respond(
-                    HttpStatusCode.BadRequest,
+                    HttpStatusCode.OK,
                     MyResponse(
                         success = false,
                         message = "Email is wrong",
@@ -161,7 +163,7 @@ fun Route.usersRoute(userRepository: UserRepository, tokenManager: TokenManager)
 
         } catch (e: Exception) {
             call.respond(
-                HttpStatusCode.Conflict,
+                HttpStatusCode.OK,
                 MyResponse(
                     success = false,
                     message = e.message ?: "Failed Login",
@@ -174,5 +176,37 @@ fun Route.usersRoute(userRepository: UserRepository, tokenManager: TokenManager)
 
     }
 
+    authenticate("jwt") {
+        get(ME_REQUEST) {
+            // get user info from jwt
+
+            val user =  try{
+                call.principal<User>()!!
+
+            }catch (e:Exception){
+                call.respond(
+                    HttpStatusCode.OK,
+                    MyResponse(
+                        success = false,
+                        message = e.message ?: "Failed ",
+                        data = null
+                    )
+                )
+                return@get
+            }
+
+            call.respond(
+                HttpStatusCode.OK,
+                MyResponse(
+                    success = true,
+                    message = "Success",
+                    data = user
+                )
+            )
+            return@get
+
+
+        }
+    }
 
 }

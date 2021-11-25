@@ -80,7 +80,7 @@ class NoteRepository(private val db: Database) {
                 row[NoteEntity.dataTime] ?: "",
                 row[NoteEntity.imagePath] ?:"",
                 row[NoteEntity.note] ?: "",
-                row[NoteEntity.color] ?:"#0000",
+                row[NoteEntity.color] ?:"#333333",
                 row[NoteEntity.webLink] ?:"",
                 row[NoteEntity.userId] ?: -1
             )
